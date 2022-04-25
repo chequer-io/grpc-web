@@ -885,16 +885,16 @@ void PrintProtoDtsMessage(Printer* printer, const Descriptor* desc,
                      "get$js_field_name$_asU8(): Uint8Array;\n"
                      "get$js_field_name$_asB64(): string;\n");
     }
-    if (!field->is_map() && (field->type() != FieldDescriptor::TYPE_MESSAGE ||
-                             field->is_repeated())) {
+    if (field->type() != FieldDescriptor::TYPE_MESSAGE || field->is_repeated()) {
       printer->Print(vars,
                      "set$js_field_name$(value: $js_field_type$): "
                      "$class_name$;\n");
-    } else if (!field->is_map()) {
+    } else {
       printer->Print(vars,
                      "set$js_field_name$(value?: $js_field_type$): "
                      "$class_name$;\n");
     }
+
     if (field->has_optional_keyword() ||
         (field->type() == FieldDescriptor::TYPE_MESSAGE &&
             !field->is_repeated() && !field->is_map())) {
@@ -938,6 +938,7 @@ void PrintProtoDtsMessage(Printer* printer, const Descriptor* desc,
       "$class_name$.AsObject;\n"
       "static toObject(includeInstance: boolean, msg: $class_name$): "
       "$class_name$.AsObject;\n"
+      "static fromObject(msg: $class_name$.AsObject): $class_name$;\n"
       "static serializeBinaryToWriter(message: $class_name$, writer: "
       "jspb.BinaryWriter): void;\n"
       "static deserializeBinary(bytes: Uint8Array): $class_name$;\n"
