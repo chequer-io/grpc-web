@@ -357,7 +357,7 @@ string AsObjectFieldType(const FieldDescriptor* desc,
     string value_type = AsObjectFieldType(message->field(1), file);
     return "Array<[" + key_type + ", " + value_type + "]>";
   }
-  string field_type = JSMessageType(desc->message_type(), file) + ".AsObject";
+  string field_type = "Partial<" + JSMessageType(desc->message_type(), file) + ".AsObject" + ">";
   if (desc->is_repeated()) {
     return "Array<" + field_type + ">";
   }
@@ -959,12 +959,7 @@ void PrintProtoDtsMessage(Printer* printer, const Descriptor* desc,
     }
     vars["js_field_name"] = js_field_name;
     vars["js_field_type"] = AsObjectFieldType(field, file);
-    if ((field->type() != FieldDescriptor::TYPE_MESSAGE && !field->has_optional_keyword()) ||
-        field->is_repeated()) {
-      printer->Print(vars, "$js_field_name$: $js_field_type$,\n");
-    } else {
-      printer->Print(vars, "$js_field_name$?: $js_field_type$,\n");
-    }
+    printer->Print(vars, "$js_field_name$?: $js_field_type$,\n");
   }
   printer->Outdent();
   printer->Print("}\n");
