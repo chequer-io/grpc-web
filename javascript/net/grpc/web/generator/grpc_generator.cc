@@ -357,7 +357,7 @@ string AsObjectFieldType(const FieldDescriptor* desc,
     string value_type = AsObjectFieldType(message->field(1), file);
     return "Array<[" + key_type + ", " + value_type + "]>";
   }
-  string field_type = "Partial<" + JSMessageType(desc->message_type(), file) + ".AsObject" + ">";
+  string field_type = JSMessageType(desc->message_type(), file) + ".AsObject";
   if (desc->is_repeated()) {
     return "Array<" + field_type + ">";
   }
