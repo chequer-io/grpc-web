@@ -1110,7 +1110,7 @@ void PrintServiceConstructor(Printer* printer, std::map<string, string> vars,
                  " * @final\n"
                  " */\n"
                  "proto.$package_dot$$service_name$$is_promise$Client =\n"
-                 "    function(hostname, credentials, options) {\n"
+                 "    function $service_name$$is_promise$Client(hostname, credentials, options) {\n"
                  "  if (!options) options = {};\n");
   if (vars["mode"] == GetModeVar(Mode::GRPCWEB)) {
     printer->Print(vars, "  options.format = '$format$';\n\n");
