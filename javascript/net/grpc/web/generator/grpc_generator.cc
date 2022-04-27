@@ -1189,7 +1189,7 @@ void PrintUnaryCall(Printer* printer, std::map<string, string> vars) {
       "proto.$package_dot$$service_name$Client.prototype.$js_method_name$ =\n");
   printer->Indent();
   printer->Print(vars,
-                 "  function(request, metadata, callback) {\n"
+                 "  function $js_method_name$(request, metadata, callback) {\n"
                  "return this.client_.rpcCall(this.hostname_ +\n");
   printer->Indent();
   printer->Indent();
@@ -1224,7 +1224,7 @@ void PrintPromiseUnaryCall(Printer* printer, std::map<string, string> vars) {
                  ".$js_method_name$ =\n");
   printer->Indent();
   printer->Print(vars,
-                 "  function(request, metadata) {\n"
+                 "  function $js_method_name$(request, metadata) {\n"
                  "return this.client_.unaryCall(this.hostname_ +\n");
   printer->Indent();
   printer->Indent();
@@ -1257,7 +1257,7 @@ void PrintServerStreamingCall(Printer* printer, std::map<string, string> vars) {
                  "$js_method_name$ =\n");
   printer->Indent();
   printer->Print(
-      "  function(request, metadata) {\n"
+      "  function $js_method_name$(request, metadata) {\n"
       "return this.client_.serverStreaming(this.hostname_ +\n");
   printer->Indent();
   printer->Indent();
