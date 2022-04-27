@@ -961,6 +961,7 @@ void PrintProtoDtsMessage(Printer* printer, const Descriptor* desc,
     vars["js_field_type"] = AsObjectFieldType(field, file);
     printer->Print(vars, "$js_field_name$?: $js_field_type$,\n");
   }
+  printer->Print(vars, "$jspbMessageInstance: $class_name$");
   printer->Outdent();
   printer->Print("}\n");
 
