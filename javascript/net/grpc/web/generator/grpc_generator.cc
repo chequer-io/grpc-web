@@ -835,7 +835,7 @@ void PrintProtoDtsEnum(Printer* printer, const EnumDescriptor* desc) {
   printer->Print(vars, "export enum $enum_name$ { \n");
   printer->Indent();
   for (int i = 0; i < desc->value_count(); i++) {
-    vars["value_name"] = Uppercase(desc->value(i)->name());
+    vars["value_name"] = desc->value(i)->name();
     vars["value_number"] = std::to_string(desc->value(i)->number());
     printer->Print(vars, "$value_name$ = $value_number$,\n");
   }
@@ -853,7 +853,7 @@ void PrintProtoDtsOneofCase(Printer* printer, const OneofDescriptor* desc) {
   printer->Print(vars, "$oneof_name_upper$_NOT_SET = 0,\n");
   for (int i = 0; i < desc->field_count(); i++) {
     const FieldDescriptor* field = desc->field(i);
-    vars["field_name"] = Uppercase(field->name());
+    vars["field_name"] = CamelCaseJSFieldName(field);
     vars["field_number"] = std::to_string(field->number());
     printer->Print(vars, "$field_name$ = $field_number$,\n");
   }
