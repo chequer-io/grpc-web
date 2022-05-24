@@ -1244,7 +1244,7 @@ void PrintServerStreamingCall(Printer* printer, std::map<string, string> vars) {
                  "proto.$package_dot$$service_name$$client_type$.prototype."
                  "$js_method_name$ =\n");
   printer->Indent();
-  printer->Print(
+  printer->Print(vars,
       "  function $js_method_name$(request, metadata) {\n"
       "return this.client_.serverStreaming(this.hostname_ +\n");
   printer->Indent();
