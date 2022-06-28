@@ -853,6 +853,11 @@ void PrintProtoDtsOneofCase(Printer* printer, const OneofDescriptor* desc) {
   printer->Print("}\n");
 }
 
+bool InRealOneOf(const FieldDescriptor* field) {
+  return field->containing_oneof() &&
+    !field->containing_oneof()->is_synthetic();
+}
+
 void PrintProtoDtsMessage(Printer* printer, const Descriptor* desc,
                           const FileDescriptor* file) {
   const string& class_name = desc->name();
@@ -945,11 +950,18 @@ void PrintProtoDtsMessage(Printer* printer, const Descriptor* desc,
   printer->Indent();
   for (int i = 0; i < desc->field_count(); i++) {
     const FieldDescriptor* field = desc->field(i);
-    string js_field_name = CamelCaseJSFieldName(field);
-    if (IsReserved(js_field_name)) {
-      js_field_name = "pb_" + js_field_name;
+
+    if (InRealOneOf(field)) {
+        string name = field->name();
+        vars["js_field_name"] = name;
+    } else {
+      string js_field_name = CamelCaseJSFieldName(field);
+      if (IsReserved(js_field_name)) {
+          js_field_name = "pb_" + js_field_name;
+      }
+      vars["js_field_name"] = js_field_name;
     }
-    vars["js_field_name"] = js_field_name;
+
     vars["js_field_type"] = AsObjectFieldType(field, file);
     printer->Print(vars, "$js_field_name$?: $js_field_type$,\n");
   }
