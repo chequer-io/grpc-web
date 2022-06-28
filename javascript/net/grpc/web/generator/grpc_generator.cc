@@ -845,7 +845,7 @@ void PrintProtoDtsOneofCase(Printer* printer, const OneofDescriptor* desc) {
   printer->Print(vars, "$oneof_name_upper$_NOT_SET = 0,\n");
   for (int i = 0; i < desc->field_count(); i++) {
     const FieldDescriptor* field = desc->field(i);
-    vars["field_name"] = CamelCaseJSFieldName(field);
+    vars["field_name"] = field->name();
     vars["field_number"] = std::to_string(field->number());
     printer->Print(vars, "$field_name$ = $field_number$,\n");
   }
