@@ -84,7 +84,7 @@ jobs:
         mvn install --no-transfer-progress
         cd ../../net/grpc/gateway/examples/grpc-web-java/interop-test-service
         mvn package --no-transfer-progress
-        cp ./target/* /home/runner/work/_temp/codeql_databases/java/
+        cp -r ./target/* /home/runner/work/_temp/codeql_databases/java/
         cd ../../../../../../
 
     # ℹ️ Command-line programs to run using the OS shell.
