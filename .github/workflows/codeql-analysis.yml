@@ -30,7 +30,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'cpp', 'java', 'javascript', 'python' ]
+        language: [ 'cpp' ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
@@ -53,16 +53,10 @@ jobs:
         
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Autobuild
-      if: matrix.language != 'cpp' && matrix.language != 'java'
-      uses: github/codeql-action/autobuild@v2
-
     - name: Setup ninja
-      if: matrix.language == 'cpp'
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Build Cpp
-      if: matrix.language == 'cpp'
       run: |
         sudo apt-get install g++ git
         cd ../
@@ -76,16 +70,6 @@ jobs:
         cd ../grpc-web
         make plugin
         cp ./javascript/net/grpc/web/generator/protoc-gen-grpc-web /home/runner/work/_temp/codeql_databases/cpp/
-
-    - name: Build Java
-      if: matrix.language == 'java'
-      run: |
-        cd src/connector
-        mvn install --no-transfer-progress
-        cd ../../net/grpc/gateway/examples/grpc-web-java/interop-test-service
-        mvn package --no-transfer-progress
-        cp -r ./target/* /home/runner/work/_temp/codeql_databases/java/
-        cd ../../../../../../
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
