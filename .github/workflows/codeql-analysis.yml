@@ -81,6 +81,7 @@ jobs:
         cd ../../net/grpc/gateway/examples/grpc-web-java/interop-test-service
         mvn package --no-transfer-progress
         cd ../../../../../
+        echo $(pwd)
         cp net/grpc/gateway/examples/grpc-web-java/interop-test-service/target/* /home/runner/work/_temp/codeql_databases/java/
 
     # ℹ️ Command-line programs to run using the OS shell.
@@ -95,6 +96,3 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
-
-    - name: test
-      run: echo "TEST!!!"
