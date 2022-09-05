@@ -71,7 +71,7 @@ jobs:
         git submodule update --init --recursive
         cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release
         ninja
-        ninja install
+        sudo ninja install
 
         cd ../grpc-web
         make plugin
