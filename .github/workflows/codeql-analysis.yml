@@ -57,6 +57,10 @@ jobs:
       if: matrix.language != 'cpp' && matrix.language != 'java'
       uses: github/codeql-action/autobuild@v2
 
+    - name: Setup ninja
+      if: matrix.language == 'cpp'
+    - uses: seanmiddleditch/gha-setup-ninja@master
+
     - name: Build Cpp
       if: matrix.language == 'cpp'
       run: |
