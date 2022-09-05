@@ -60,6 +60,15 @@ jobs:
     - name: Build Cpp
       if: matrix.language == 'cpp'
       run: |
+        sudo apt-get install g++ git bazel
+        cd ../
+        git clone https://github.com/protocolbuffers/protobuf.git
+        cd protobuf
+        git submodule update --init --recursive
+        bazel build :protoc :protobuf
+        cp bazel-bin/protoc /usr/local/bin
+
+        cd ../grpc-web
         make plugin
         cp ./javascript/net/grpc/web/generator/protoc-gen-grpc-web /home/runner/work/_temp/codeql_databases/cpp/
 
@@ -70,6 +79,7 @@ jobs:
         mvn install --no-transfer-progress
         cd ../../net/grpc/gateway/examples/grpc-web-java/interop-test-service
         mvn package --no-transfer-progress
+        cd ../../../../../
         cp net/grpc/gateway/examples/grpc-web-java/interop-test-service/target/* /home/runner/work/_temp/codeql_databases/java/
 
     # ℹ️ Command-line programs to run using the OS shell.
