@@ -60,13 +60,14 @@ jobs:
     - name: Build Cpp
       if: matrix.language == 'cpp'
       run: |
-        sudo apt-get install g++ git bazel
+        sudo apt-get install g++ git
         cd ../
         git clone https://github.com/protocolbuffers/protobuf.git
         cd protobuf
         git submodule update --init --recursive
-        bazel build :protoc :protobuf
-        cp bazel-bin/protoc /usr/local/bin
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+        ninja
+        ninja install
 
         cd ../grpc-web
         make plugin
