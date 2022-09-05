@@ -60,16 +60,8 @@ jobs:
 
     - name: Build Cpp
       run: |
-        sudo apt-get install g++ git
-        cd ../
-        git clone https://github.com/protocolbuffers/protobuf.git
-        cd protobuf
-        git submodule update --init --recursive
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release
-        ninja
-        sudo ninja install
+        sudo apt-get install g++ git libprotobuf-dev
 
-        cd ../grpc-web
         make plugin
         cp ./javascript/net/grpc/web/generator/protoc-gen-grpc-web /home/runner/work/_temp/codeql_databases/cpp/
 
