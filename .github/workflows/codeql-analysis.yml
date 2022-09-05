@@ -55,6 +55,8 @@ jobs:
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Setup ninja
       uses: seanmiddleditch/gha-setup-ninja@master
+      with:
+        destination: '/usr/local/bin'
 
     - name: Build Cpp
       run: |
@@ -65,7 +67,7 @@ jobs:
         git submodule update --init --recursive
         cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release
         ninja
-        cp ./protoc /usr/local/bin/
+        sudo ninja install
 
         cd ../grpc-web
         make plugin
