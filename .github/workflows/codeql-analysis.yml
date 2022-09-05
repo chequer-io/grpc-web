@@ -61,6 +61,7 @@ jobs:
       if: matrix.language == 'cpp'
       run: |
         make plugin
+        cp ./javascript/net/grpc/web/generator/protoc-gen-grpc-web /home/runner/work/_temp/codeql_databases/cpp/
 
     - name: Build Java
       if: matrix.language == 'java'
@@ -69,6 +70,7 @@ jobs:
         mvn install --no-transfer-progress
         cd ../../net/grpc/gateway/examples/grpc-web-java/interop-test-service
         mvn package --no-transfer-progress
+        cp net/grpc/gateway/examples/grpc-web-java/interop-test-service/target/* /home/runner/work/_temp/codeql_databases/java/
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
