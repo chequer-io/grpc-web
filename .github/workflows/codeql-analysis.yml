@@ -54,7 +54,21 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
+      if: matrix.language != 'cpp' && matrix.language != 'java'
       uses: github/codeql-action/autobuild@v2
+
+    - name: Build Cpp
+      if: matrix.language == 'cpp'
+      run: |
+        make plugin
+
+    - name: Build Java
+      if: matrix.language == 'java'
+      run: |
+        cd src/connector
+        mvn install --no-transfer-progress
+        cd ../../net/grpc/gateway/examples/grpc-web-java/interop-test-service
+        mvn package --no-transfer-progress
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
